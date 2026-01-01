@@ -1,1 +1,4 @@
 aws-vpc-nginx-sg/*.terraform*
+aws-vpc-nginx-sg/.terraform.*
+aws-vpc-nginx-sg/*.tfstate
+aws-vpc-nginx-sg/*.tfstate.*
