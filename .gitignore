@@ -6,9 +6,7 @@
 /terraform-project/aws-vpc-nginx-sg/*.tfstate
 /terraform-project/aws-vpc-nginx-sg/*.tfstate.*
 
-./terraform-project/terraform-basic/.terraform/*
-./terraform-project/terraform-basic/*.tfstate
-./terraform-project/terraform-basic/*.tfstate.*
+terrraform-basic/.terraform
 
 terraform-project/aws-vpc-nginx-sg/.terraform/*
 .terraform/
