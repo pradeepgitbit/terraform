@@ -11,3 +11,5 @@
 ./terraform-project/terraform-basic/*.tfstate.*
 
 terraform-project/aws-vpc-nginx-sg/.terraform/*
+.terraform/
+terraform-project/aws-vpc-nginx-sg/.terraform/
