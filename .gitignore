@@ -1,3 +1,11 @@
 .terraform/*
 *.tfstate
 *.tfstate.*
+
+./terraform-project/aws-vpc-nginx-sg/.terraform/*
+/terraform-project/aws-vpc-nginx-sg/*.tfstate
+/terraform-project/aws-vpc-nginx-sg/*.tfstate.*
+
+./terraform-project/terraform-basic/.terraform/*
+./terraform-project/terraform-basic/*.tfstate
+./terraform-project/terraform-basic/*.tfstate.*

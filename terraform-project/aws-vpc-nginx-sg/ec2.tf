@@ -10,12 +10,14 @@ resource "aws_instance" "vpc-instance" {
     vpc_security_group_ids = [ aws_security_group.vpc-nginx-sg.id]
     associate_public_ip_address = true
 
-    user_data = <<-EOF
-                #!/bin/bash
-                sudo yum-get update -y
-                sudo yum intall nginx -y
-                sudo systemctl start nginx
-                EOF
+    user_data = <<EOF
+#!/bin/bash
+sudo yum install -y httpd
+sudo systemctl start httpd
+sudo systemctl enable httpd
+echo "Hello From Auto Scaling Group" >/var/www/html/index.html
+EOF  
+
     tags = {
       Name = "Nginx-server"
     }
@@ -30,6 +32,13 @@ resource "aws_security_group" "vpc-nginx-sg" {
     ingress {
         from_port = 80
         to_port = 80
+        protocol = "tcp"
+        cidr_blocks = ["0.0.0.0/0"]
+    }
+
+    ingress {
+        from_port = 22
+        to_port = 22
         protocol = "tcp"
         cidr_blocks = ["0.0.0.0/0"]
     }
