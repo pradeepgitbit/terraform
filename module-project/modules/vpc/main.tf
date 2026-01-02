@@ -9,7 +9,7 @@ resource "aws_subnet" "vpc_subnet" {
     availability_zone = var.availability_zone
 
     tags = {
-      Name = vpc_subnet
+      Name = "vpc-subnet"
     }
   
 }
