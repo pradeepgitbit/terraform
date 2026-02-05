@@ -19,7 +19,24 @@ output "output" {
     value = local.users_data[*].username        #to see the output if it has captured the file
 }
 
-resource "aws_iam_user" "main" {
+#Creating users
+resource "aws_iam_user" "users" {
     for_each = toset(local.users_data[*].username)
     name = each.value
+}
+
+#Password creation
+resource "aws_iam_user_login_profile" "profile" {
+    for_each = aws_iam_user.users
+    user = each.value
+    password_length = 12
+
+    lifecycle {
+      ignore_changes = [ 
+        password_length,
+        password_reset_required,
+        pgp_key,
+       ]
+    }
+  
 }
