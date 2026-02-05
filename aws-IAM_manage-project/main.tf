@@ -12,9 +12,14 @@ provider "aws" {
 }
 
 locals {
-  users_data = file("./users.yml")   #fetch the data and store here.
-}
+  users_data = yamldecode(file("./users.yml")).users  #fetch the data and store here.
+}                                                # added yamldecode to change the format && added .users
 
 output "output" {
-    value = local.users_data        #to see the output if it has captured the file
+    value = local.users_data[*].username        #to see the output if it has captured the file
+}
+
+resource "aws_iam_user" "main" {
+    for_each = toset(local.users_data[*].username)
+    name = each.value
 }
