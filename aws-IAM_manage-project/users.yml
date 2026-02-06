@@ -4,4 +4,4 @@ users:
   - username: sham
     role: readonly
   - username: baburao
-    role: ec2allaccess
+    role: ec2allaccesss
