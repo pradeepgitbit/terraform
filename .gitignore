@@ -12,6 +12,7 @@ terraform-project/aws-vpc-nginx-sg/.terraform/*
 .terraform/
 terraform-project/aws-vpc-nginx-sg/.terraform/
 ./terraform-project/aws-vpc-nginx-sg/*.tfstate
+.terraform.lock.hcl
 
 
 
