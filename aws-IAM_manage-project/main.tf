@@ -12,11 +12,16 @@ provider "aws" {
 }
 
 locals {
-  users_data = yamldecode(file("./users.yml")).users  #fetch the data and store here.
-}                                                # added yamldecode to change the format && added .users
+  users_data = yamldecode(file("./users.yml")).users  #fetch the data and store here.# added yamldecode to change the format && added .users
 
-output "output" {
-    value = local.users_data[*].username        #to see the output (only usernames) if it has captured the file
+  user_role_pair = flatten([ for user in local.users_data: [ for role in user.roles: {
+    username = user.username
+    role = role
+  } ] ])
+}                                                
+
+output "role" {
+  value = local.user_role_pair
 }
 
 #Creating users
@@ -28,7 +33,7 @@ resource "aws_iam_user" "users" {
 #Password creation
 resource "aws_iam_user_login_profile" "profile" {
     for_each = aws_iam_user.users
-    user = each.value
+    user = each.value.name
     password_length = 12
 
     lifecycle {
@@ -38,5 +43,19 @@ resource "aws_iam_user_login_profile" "profile" {
         pgp_key,
        ]
     }
+  
+}
+
+#Attach Policies
+resource "aws_iam_user_policy_attachment" "main" {
+    for_each = {
+      for pair in local.user_role_pair :
+      "${pair.username}-${pair.role}" => pair
+    }
+        #baburao-EC2Access = {username = baburao, role = ec2access}
+        #baburao-s3Read = {}
+        
+    user = aws_iam_user.users[each.value.username].name
+    policy_arn = "arn:aws:iam::aws:policy/${each.value.role}"
   
 }
